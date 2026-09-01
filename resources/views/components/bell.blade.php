@@ -115,10 +115,6 @@ function patchubOpenModal(event, element) {
     
     overlay.style.display = 'flex';
 }
-    `;
-    
-    overlay.style.display = 'flex';
-}
 
 function patchubCloseModal() {
     const overlay = document.getElementById('patchub-modal-overlay');
