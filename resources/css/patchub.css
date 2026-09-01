@@ -88,7 +88,6 @@
     align-items: center;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #eee;
 }
 
 .patchub-bell__title {
@@ -401,4 +400,102 @@
         flex: 1;
         min-width: 100px;
     }
+}
+
+/* Markdown Content Styling */
+.patchub-markdown h1,
+.patchub-markdown h2,
+.patchub-markdown h3,
+.patchub-markdown h4,
+.patchub-markdown h5,
+.patchub-markdown h6 {
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.patchub-markdown h1 { font-size: 1.875rem; }
+.patchub-markdown h2 { font-size: 1.5rem; }
+.patchub-markdown h3 { font-size: 1.25rem; }
+.patchub-markdown h4 { font-size: 1.1rem; }
+.patchub-markdown h5 { font-size: 1rem; }
+.patchub-markdown h6 { font-size: 0.9rem; }
+
+.patchub-markdown p {
+    margin: 0.75rem 0;
+}
+
+.patchub-markdown ul,
+.patchub-markdown ol {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+}
+
+.patchub-markdown li {
+    margin: 0.25rem 0;
+}
+
+.patchub-markdown code {
+    background: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: #1f2937;
+}
+
+.patchub-markdown pre {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.patchub-markdown pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.patchub-markdown blockquote {
+    border-left: 4px solid #d1d5db;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.patchub-markdown a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.patchub-markdown a:hover {
+    text-decoration: underline;
+}
+
+.patchub-markdown table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.patchub-markdown th,
+.patchub-markdown td {
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.patchub-markdown th {
+    background: #f9fafb;
+    font-weight: 600;
+}
+
+.patchub-markdown hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 2rem 0;
 }
