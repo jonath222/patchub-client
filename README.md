@@ -30,17 +30,28 @@ Depuis la racine de l'application cliente :
 
 ```bash
 composer config repositories.patchub vcs https://github.com/jonath222/patchub-client.git
-composer require patchub/client:^1.0.6
+composer require patchub/client:^1.0.7
 ```
 
 Avec Docker et l'alias `dce docker compose exec` :
 
 ```bash
 dce composer config repositories.patchub vcs https://github.com/jonath222/patchub-client.git
-dce sh -lc 'mkdir -p /tmp/composer && export COMPOSER_HOME=/tmp/composer && composer require patchub/client:^1.0.6 --no-interaction'
+dce sh -lc 'composer validate --no-check-publish && export COMPOSER_HOME=/tmp/composer-$(id -u) COMPOSER_CACHE_DIR=/tmp/composer-cache-$(id -u) && mkdir -p "$COMPOSER_HOME" "$COMPOSER_CACHE_DIR" && composer require patchub/client:^1.0.7 --no-interaction'
 ```
 
-`COMPOSER_HOME` est necessaire uniquement si Composer s'exécute dans un conteneur avec `HOME=/`. Il permet a Composer d'utiliser un cache accessible en ecriture.
+Si `composer config` produit une erreur de schema concernant `repositories[0]`, corrigez le fichier `composer.json` pour que `repositories` soit un tableau (`[...]`) et non un objet (`{...}`). Une seule entree VCS suffit :
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/jonath222/patchub-client.git"
+    }
+]
+```
+
+`COMPOSER_HOME` et `COMPOSER_CACHE_DIR` sont necessaires uniquement si Composer s'exécute dans un conteneur avec `HOME=/` ou si un ancien repertoire Composer n'est pas accessible en ecriture. Le suffixe UID evite de reutiliser un repertoire cree par un autre utilisateur.
 
 Si le package est deja declare dans `composer.json`, ne relancez pas `composer require`. Utilisez la procedure de mise a jour ci-dessous.
 
@@ -103,7 +114,7 @@ npm run build
 Rendez le composant une seule fois dans le layout global, de preference en dehors des navbars et sidebars :
 
 ```blade
-<x-patchub-bell />
+<x-patchub-bell />>
 ```
 
 Le composant est autonome :
@@ -121,7 +132,7 @@ La route `patchub.patch-notes` est optionnelle. Le composant n'affiche les liens
 Apres la publication d'une nouvelle version du package, depuis l'application cliente :
 
 ```bash
-dce sh -lc 'mkdir -p /tmp/composer && export COMPOSER_HOME=/tmp/composer && composer update patchub/client -W --no-interaction'
+dce sh -lc 'export COMPOSER_HOME=/tmp/composer-$(id -u) COMPOSER_CACHE_DIR=/tmp/composer-cache-$(id -u) && mkdir -p "$COMPOSER_HOME" "$COMPOSER_CACHE_DIR" && composer update patchub/client -W --no-interaction'
 dce php artisan vendor:publish --tag=patchub-client-css --force --ansi
 npm run build
 dce php artisan migrate
@@ -137,7 +148,7 @@ Committez ensuite `composer.json` et `composer.lock`.
 La production doit utiliser les versions verrouillees dans `composer.lock`. Ne donnez pas de nom de package a `composer install` : cette commande installe toutes les dependances du lock file.
 
 ```bash
-dce sh -lc 'mkdir -p /tmp/composer && export COMPOSER_HOME=/tmp/composer && composer install --no-dev --prefer-dist --optimize-autoloader --classmap-authoritative --no-interaction'
+dce sh -lc 'export COMPOSER_HOME=/tmp/composer-$(id -u) COMPOSER_CACHE_DIR=/tmp/composer-cache-$(id -u) && mkdir -p "$COMPOSER_HOME" "$COMPOSER_CACHE_DIR" && composer install --no-dev --prefer-dist --optimize-autoloader --classmap-authoritative --no-interaction'
 dce php artisan vendor:publish --tag=patchub-client-css --force --ansi
 npm ci
 npm run build
@@ -172,7 +183,7 @@ Utilisez une image PHP compatible avec le `composer.lock`, ou mettez a jour les 
 Si le conteneur utilise `HOME=/`, donnez a Composer un repertoire de cache writable :
 
 ```bash
-dce sh -lc 'mkdir -p /tmp/composer && export COMPOSER_HOME=/tmp/composer && composer require patchub/client:^1.0.7 --no-interaction'
+dce sh -lc 'export COMPOSER_HOME=/tmp/composer-$(id -u) COMPOSER_CACHE_DIR=/tmp/composer-cache-$(id -u) && mkdir -p "$COMPOSER_HOME" "$COMPOSER_CACHE_DIR" && composer require patchub/client:^1.0.7 --no-interaction'
 ```
 
 ## Verification
