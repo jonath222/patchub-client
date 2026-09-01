@@ -2,53 +2,84 @@
 /* Framework agnostic - works with Bootstrap, Tailwind, plain HTML, etc. */
 
 .patchub-bell {
+    --patchub-offset-right: 16px;
+    --patchub-offset-bottom: 16px;
+    --patchub-widget-size: 48px;
+    position: fixed;
+    right: var(--patchub-offset-right);
+    bottom: var(--patchub-offset-bottom);
+    z-index: 1050;
+}
+
+.patchub-bell__details {
     position: relative;
-    display: inline-block;
 }
 
 .patchub-bell__trigger {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: var(--patchub-widget-size);
+    height: var(--patchub-widget-size);
+    padding: 0;
+    border: 1px solid #d5d9df;
+    border-radius: 50%;
+    background: #ffffff;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    list-style: none;
+}
+
+.patchub-bell__trigger::-webkit-details-marker {
+    display: none;
 }
 
 .patchub-bell__trigger:hover {
-    opacity: 0.8;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
 .patchub-bell__badge {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -5px;
+    right: -5px;
+    min-width: 18px;
+    padding: 2px 5px;
     background-color: #e74c3c;
-    color: white;
+    color: #ffffff;
     border-radius: 999px;
     font-size: 11px;
     font-weight: bold;
-    padding: 2px 6px;
-    min-width: 18px;
+    line-height: 1.2;
     text-align: center;
 }
 
 .patchub-bell__dropdown {
     position: absolute;
-    top: calc(100% + 8px);
     right: 0;
-    width: min(320px, calc(100vw - 24px));
-    max-height: 400px;
+    bottom: calc(100% + 12px);
+    width: min(360px, calc(100vw - 32px));
+    max-height: min(400px, calc(100vh - 96px));
     overflow-y: auto;
-    background: white;
+    background: #ffffff;
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    z-index: 1;
+}
+
+@media (max-width: 480px) {
+    .patchub-bell {
+        --patchub-offset-right: 12px;
+        --patchub-offset-bottom: 12px;
+    }
+
+    .patchub-bell__dropdown {
+        width: calc(100vw - 24px);
+    }
 }
 
 .patchub-bell__header {

@@ -1,11 +1,12 @@
 @php
     $hasUnread = $unreadCount > 0;
+    $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
 @endphp
 
 <div class="patchub-bell">
-    <details style="list-style: none;">
-        <summary class="patchub-bell__trigger" style="cursor: pointer;">
-            🔔
+    <details class="patchub-bell__details">
+        <summary class="patchub-bell__trigger" aria-label="Afficher les patch notes">
+            <span aria-hidden="true">🔔</span>
             @if ($hasUnread)
                 <span class="patchub-bell__badge">{{ $unreadCount }}</span>
             @endif
@@ -38,9 +39,6 @@
                     <div class="patchub-bell__item-content">
                         {{ \Illuminate\Support\Str::limit(strip_tags($patchNote->content), 120) }}
                     </div>
-                        @php
-                            $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
-                        @endphp
                         @if ($hasPatchNotesRoute)
                             <a href="{{ route('patchub.patch-notes', $patchNote->id) }}" class="patchub-bell__item-link">
                                 Lire la suite →
@@ -52,9 +50,6 @@
             @endforelse
 
             {{-- Footer with view all link --}}
-            @php
-                $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
-            @endphp
             @if ($hasPatchNotesRoute && $patchNotes->count() > 0)
                 <div class="patchub-bell__footer">
                     <a href="{{ route('patchub.patch-notes') }}" class="patchub-bell__view-all">
