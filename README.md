@@ -13,6 +13,17 @@ Le package est compatible avec Laravel 11, 12 et 13. Il ne dépend pas de Bootst
 
 Le package n'est pas publie sur Packagist. Il faut donc declarer son depot VCS avant la premiere installation.
 
+Avant l'installation, verifiez que PHP et les extensions de l'application sont disponibles :
+
+```bash
+php -v
+php -m | grep -E 'dom|xml'
+```
+
+La version PHP doit respecter le `composer.json` et le `composer.lock` de l'application. Composer peut aussi verifier des extensions requises par les dependances de developpement deja verrouillees, notamment `ext-xml` et `ext-dom`.
+
+Si l'application utilise Laravel 13 avec Symfony 8, PHP 8.4.1 ou une version ulterieure peut etre necessaire, meme si la contrainte PHP du projet commence a `^8.3`.
+
 ## Installation initiale
 
 Depuis la racine de l'application cliente :
@@ -137,6 +148,32 @@ dce php artisan optimize
 Si `patchub/client` n'est pas deja present dans `composer.json` et `composer.lock`, faites d'abord l'installation ou la mise a jour en developpement, puis committez ces deux fichiers avant le deploiement.
 
 N'utilisez pas `composer update` en production : il peut resoudre de nouvelles versions et produire un environnement different de celui teste en developpement.
+
+## Erreurs Composer courantes
+
+### `ext-xml` ou `ext-dom` manquante
+
+Installez ou activez les extensions XML et DOM dans l'environnement qui execute Composer. Avec Docker, elles doivent etre presentes dans l'image PHP du conteneur `app`, pas seulement sur l'hote.
+
+Relancez ensuite la commande d'installation :
+
+```bash
+composer require patchub/client:^1.0.7 --no-interaction
+```
+
+N'utilisez pas `--ignore-platform-req` pour corriger durablement le probleme : l'application ou ses tests peuvent ensuite echouer au runtime.
+
+### `symfony/console` demande PHP 8.4.1
+
+Utilisez une image PHP compatible avec le `composer.lock`, ou mettez a jour les dependances du projet en developpement apres verification de la compatibilite. Ne forcez pas l'installation avec une version PHP trop ancienne.
+
+### `/.composer/cache` non accessible en Docker
+
+Si le conteneur utilise `HOME=/`, donnez a Composer un repertoire de cache writable :
+
+```bash
+dce sh -lc 'mkdir -p /tmp/composer && export COMPOSER_HOME=/tmp/composer && composer require patchub/client:^1.0.7 --no-interaction'
+```
 
 ## Verification
 
