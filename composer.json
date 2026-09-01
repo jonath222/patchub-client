@@ -15,6 +15,9 @@
             "Patchub\\Client\\": "src/"
         }
     },
+    "bin": [
+        "bin/patchub-client-update"
+    ],
     "extra": {
         "laravel": {
             "providers": [

@@ -1,0 +1,89 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Update Patchub Client from a Laravel application root.
+ *
+ * Usage:
+ *   vendor/bin/patchub-client-update
+ *   vendor/bin/patchub-client-update --publish
+ *   vendor/bin/patchub-client-update --force
+ */
+
+function fail(string $message): never
+{
+    fwrite(STDERR, "Patchub Client: {$message}\n");
+    exit(1);
+}
+
+function runCommand(array $command, string $workingDirectory): void
+{
+    $commandLine = implode(' ', array_map(escapeshellarg(...), $command));
+    $exitCode = 0;
+
+    passthru('cd '.escapeshellarg($workingDirectory).' && '.$commandLine, $exitCode);
+
+    if ($exitCode !== 0) {
+        exit($exitCode);
+    }
+}
+
+function applicationRoot(string $directory): ?string
+{
+    $currentDirectory = realpath($directory);
+
+    while ($currentDirectory !== false) {
+        if (is_file($currentDirectory.'/artisan') && is_file($currentDirectory.'/composer.json')) {
+            return $currentDirectory;
+        }
+
+        $parentDirectory = dirname($currentDirectory);
+
+        if ($parentDirectory === $currentDirectory) {
+            return null;
+        }
+
+        $currentDirectory = $parentDirectory;
+    }
+
+    return null;
+}
+
+$arguments = array_slice($argv, 1);
+$publishResources = in_array('--publish', $arguments, true) || in_array('--force', $arguments, true);
+$forcePublish = in_array('--force', $arguments, true);
+$unknownArguments = array_diff($arguments, ['--publish', '--force']);
+
+if ($unknownArguments !== []) {
+    fail('options accepted: --publish, --force');
+}
+
+$root = applicationRoot(getcwd());
+
+if ($root === null) {
+    fail('run this command from a Laravel application directory.');
+}
+
+$composer = getenv('PATCHUB_COMPOSER_BINARY') ?: 'composer';
+
+runCommand([$composer, 'update', 'patchub/client', '--with-all-dependencies', '--no-interaction'], $root);
+
+if ($publishResources) {
+    $publishOptions = ['vendor:publish', '--provider=Patchub\\Client\\PatchubClientServiceProvider', '--tag=patchub-client-css', '--no-interaction'];
+
+    if ($forcePublish) {
+        $publishOptions[] = '--force';
+    }
+
+    runCommand([PHP_BINARY, 'artisan', ...$publishOptions], $root);
+
+    $publishOptions[2] = '--tag=patchub-client-views';
+    runCommand([PHP_BINARY, 'artisan', ...$publishOptions], $root);
+}
+
+runCommand([PHP_BINARY, 'artisan', 'view:clear', '--no-interaction'], $root);
+runCommand([PHP_BINARY, 'artisan', 'config:clear', '--no-interaction'], $root);
+
+echo "Patchub Client updated.\n";
