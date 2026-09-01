@@ -38,18 +38,24 @@
                     <div class="patchub-bell__item-content">
                         {{ \Illuminate\Support\Str::limit(strip_tags($patchNote->content), 120) }}
                     </div>
-                    @if (route('patchub.patch-notes', [], false))
-                        <a href="{{ route('patchub.patch-notes', $patchNote->id) }}" class="patchub-bell__item-link">
-                            Lire la suite →
-                        </a>
-                    @endif
+                        @php
+                            $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
+                        @endphp
+                        @if ($hasPatchNotesRoute)
+                            <a href="{{ route('patchub.patch-notes', $patchNote->id) }}" class="patchub-bell__item-link">
+                                Lire la suite →
+                            </a>
+                        @endif
                 </div>
             @empty
                 <p class="patchub-bell__empty">Aucune patch note pour le moment.</p>
             @endforelse
 
             {{-- Footer with view all link --}}
-            @if (route('patchub.patch-notes', [], false) && $patchNotes->count() > 0)
+            @php
+                $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
+            @endphp
+            @if ($hasPatchNotesRoute && $patchNotes->count() > 0)
                 <div class="patchub-bell__footer">
                     <a href="{{ route('patchub.patch-notes') }}" class="patchub-bell__view-all">
                         Voir toutes les patch notes →
