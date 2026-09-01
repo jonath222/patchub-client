@@ -1,0 +1,171 @@
+/* Patchub Client - Universal CSS */
+/* Framework agnostic - works with Bootstrap, Tailwind, plain HTML, etc. */
+
+.patchub-bell {
+    position: relative;
+    display: inline-block;
+}
+
+.patchub-bell__trigger {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.patchub-bell__trigger:hover {
+    opacity: 0.8;
+}
+
+.patchub-bell__badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    min-width: 18px;
+    text-align: center;
+}
+
+.patchub-bell__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: min(320px, calc(100vw - 24px));
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.patchub-bell__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.patchub-bell__title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.patchub-bell__mark-read {
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: #0066cc;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+}
+
+.patchub-bell__mark-read:hover {
+    text-decoration: underline;
+}
+
+.patchub-bell__empty {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.patchub-bell__item {
+    padding: 8px 0;
+    border-top: 1px solid #eee;
+}
+
+.patchub-bell__item:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.patchub-bell__item-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.patchub-bell__item-version {
+    color: #888;
+    font-weight: normal;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.patchub-bell__item-content {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.patchub-bell__item-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.patchub-bell__item-link:hover {
+    text-decoration: underline;
+}
+
+.patchub-bell__footer {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.patchub-bell__view-all {
+    display: inline-block;
+    font-size: 12px;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.patchub-bell__view-all:hover {
+    text-decoration: underline;
+}
+
+/* Scrollbar styling for dropdown */
+.patchub-bell__dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.patchub-bell__dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.patchub-bell__dropdown::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.patchub-bell__dropdown::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}

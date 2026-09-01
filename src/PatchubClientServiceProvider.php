@@ -33,7 +33,11 @@ class PatchubClientServiceProvider extends ServiceProvider
         ], 'patchub-client-config');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/patchub-client'),
+            __DIR__.'/../resources/css/patchub.css' => resource_path('css/patchub.css'),
+        ], 'patchub-client-css');
+
+        $this->publishes([
+            __DIR__.'/../resources/views/components/bell.blade.php' => resource_path('views/components/patchub-bell.blade.php'),
         ], 'patchub-client-views');
     }
 }
