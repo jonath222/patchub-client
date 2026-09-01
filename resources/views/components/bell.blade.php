@@ -31,7 +31,7 @@
 
             {{-- Items --}}
             @forelse ($patchNotes as $patchNote)
-                <a href="#" class="patchub-bell__item" onclick="patchubOpenModal(event, {{ json_encode(['id' => $patchNote->id, 'title' => $patchNote->title, 'version' => $patchNote->version]) }}, @json(MarkdownConverter::convert($patchNote->content)))">
+                <a href="#" class="patchub-bell__item" data-modal-id="{{ $patchNote->id }}" data-modal-title="{{ e($patchNote->title) }}" data-modal-version="{{ e($patchNote->version) }}" data-modal-content="{{ base64_encode(MarkdownConverter::convert($patchNote->content)) }}" onclick="patchubOpenModal(event, this)">
                     <div class="patchub-bell__item-title">
                         {{ $patchNote->title }}
                         @if ($patchNote->version)
@@ -81,12 +81,27 @@
 </style>
 
 <script>
-function patchubOpenModal(event, data, htmlContent) {
+function patchubOpenModal(event, element) {
     event.preventDefault();
     event.stopPropagation();
     
     const overlay = document.getElementById('patchub-modal-overlay');
     const body = document.getElementById('patchub-modal-body');
+    
+    // Decode base64 content properly for UTF-8
+    const binaryString = atob(element.dataset.modalContent);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    const decodedContent = new TextDecoder().decode(bytes);
+    
+    const data = {
+        id: element.dataset.modalId,
+        title: element.dataset.modalTitle,
+        version: element.dataset.modalVersion,
+        content: decodedContent
+    };
     
     body.innerHTML = `
         <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: bold; color: #1f2937;">
@@ -94,8 +109,12 @@ function patchubOpenModal(event, data, htmlContent) {
             ${data.version ? `<span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-left: 0.5rem;">v${data.version}</span>` : ''}
         </h2>
         <div class="patchub-markdown" style="margin-top: 1.5rem; color: #374151; line-height: 1.6;">
-            ${htmlContent}
+            ${data.content}
         </div>
+    `;
+    
+    overlay.style.display = 'flex';
+}
     `;
     
     overlay.style.display = 'flex';
