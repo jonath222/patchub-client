@@ -31,7 +31,7 @@
 
             {{-- Items --}}
             @forelse ($patchNotes as $patchNote)
-                <a href="#" class="patchub-bell__item" onclick="patchubOpenModal(event, {{ json_encode(['id' => $patchNote->id, 'title' => $patchNote->title, 'version' => $patchNote->version, 'content' => MarkdownConverter::convert($patchNote->content)]) }})">
+                <a href="#" class="patchub-bell__item" onclick="patchubOpenModal(event, {{ json_encode(['id' => $patchNote->id, 'title' => $patchNote->title, 'version' => $patchNote->version]) }}, @json(MarkdownConverter::convert($patchNote->content)))">
                     <div class="patchub-bell__item-title">
                         {{ $patchNote->title }}
                         @if ($patchNote->version)
@@ -81,7 +81,7 @@
 </style>
 
 <script>
-function patchubOpenModal(event, data) {
+function patchubOpenModal(event, data, htmlContent) {
     event.preventDefault();
     event.stopPropagation();
     
@@ -94,7 +94,7 @@ function patchubOpenModal(event, data) {
             ${data.version ? `<span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-left: 0.5rem;">v${data.version}</span>` : ''}
         </h2>
         <div class="patchub-markdown" style="margin-top: 1.5rem; color: #374151; line-height: 1.6;">
-            ${data.content}
+            ${htmlContent}
         </div>
     `;
     

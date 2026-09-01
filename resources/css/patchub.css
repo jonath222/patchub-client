@@ -409,38 +409,40 @@
 .patchub-markdown h4,
 .patchub-markdown h5,
 .patchub-markdown h6 {
-    margin-top: 1.25rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.4rem;
     font-weight: 700;
 }
 
-.patchub-markdown h1 { font-size: 1.875rem; }
-.patchub-markdown h2 { font-size: 1.5rem; }
-.patchub-markdown h3 { font-size: 1.25rem; }
-.patchub-markdown h4 { font-size: 1.1rem; }
-.patchub-markdown h5 { font-size: 1rem; }
-.patchub-markdown h6 { font-size: 0.9rem; }
+.patchub-markdown h1 { font-size: 1.35rem; }
+.patchub-markdown h2 { font-size: 1.15rem; }
+.patchub-markdown h3 { font-size: 1rem; }
+.patchub-markdown h4 { font-size: 0.95rem; }
+.patchub-markdown h5 { font-size: 0.9rem; }
+.patchub-markdown h6 { font-size: 0.85rem; }
 
 .patchub-markdown p {
-    margin: 0.75rem 0;
+    margin: 0.35rem 0;
+    font-size: 0.9rem;
 }
 
 .patchub-markdown ul,
 .patchub-markdown ol {
-    margin: 0.75rem 0;
-    padding-left: 1.5rem;
+    margin: 0.35rem 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
 }
 
 .patchub-markdown li {
-    margin: 0.25rem 0;
+    margin: 0.1rem 0;
 }
 
 .patchub-markdown code {
     background: #f3f4f6;
-    padding: 0.2rem 0.4rem;
+    padding: 0.15rem 0.3rem;
     border-radius: 0.25rem;
     font-family: 'Courier New', 'Monaco', monospace;
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #1f2937;
 }
 
@@ -448,9 +450,10 @@
     background: #f3f4f6;
     border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.5rem;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
 }
 
 .patchub-markdown pre code {
@@ -460,16 +463,18 @@
 }
 
 .patchub-markdown blockquote {
-    border-left: 4px solid #d1d5db;
-    margin: 1rem 0;
-    padding-left: 1rem;
+    border-left: 3px solid #d1d5db;
+    margin: 0.5rem 0;
+    padding-left: 0.75rem;
     color: #6b7280;
     font-style: italic;
+    font-size: 0.9rem;
 }
 
 .patchub-markdown a {
     color: #0066cc;
     text-decoration: none;
+    font-size: 0.9rem;
 }
 
 .patchub-markdown a:hover {
@@ -479,13 +484,14 @@
 .patchub-markdown table {
     border-collapse: collapse;
     width: 100%;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
 }
 
 .patchub-markdown th,
 .patchub-markdown td {
     border: 1px solid #e5e7eb;
-    padding: 0.5rem;
+    padding: 0.35rem 0.4rem;
     text-align: left;
 }
 
@@ -497,5 +503,5 @@
 .patchub-markdown hr {
     border: none;
     border-top: 1px solid #e5e7eb;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
