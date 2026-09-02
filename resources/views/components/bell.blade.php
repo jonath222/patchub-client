@@ -38,8 +38,8 @@
                             <span class="patchub-bell__item-version">v{{ $patchNote->version }}</span>
                         @endif
                     </div>
-                    <div class="patchub-bell__item-content">
-                        {{ \Illuminate\Support\Str::limit(strip_tags($patchNote->content), 120) }}
+                    <div class="patchub-bell__item-content patchub-markdown">
+                        {!! MarkdownConverter::convert($patchNote->content) !!}
                     </div>
                 </a>
             @empty

@@ -149,6 +149,34 @@
     font-size: 13px;
     color: #555;
     line-height: 1.4;
+    max-height: 3.6em;
+    overflow: hidden;
+}
+
+.patchub-bell__item-content p {
+    margin: 0;
+}
+
+.patchub-bell__item-content h1,
+.patchub-bell__item-content h2,
+.patchub-bell__item-content h3,
+.patchub-bell__item-content h4,
+.patchub-bell__item-content h5,
+.patchub-bell__item-content h6 {
+    margin: 0;
+    font-size: 1em;
+}
+
+.patchub-bell__item-content ul,
+.patchub-bell__item-content ol {
+    margin: 0;
+    padding-left: 1.25em;
+}
+
+.patchub-bell__item-content pre,
+.patchub-bell__item-content table,
+.patchub-bell__item-content blockquote {
+    display: none;
 }
 
 .patchub-bell__item-link {
