@@ -41,7 +41,7 @@
                     <div class="patchub-bell__item-content patchub-markdown">
                         {!! MarkdownConverter::convert($patchNote->content) !!}
                     </div>
-                    <span class="patchub-bell__item-link">Lire plus →</span>
+                    <span class="patchub-bell__item-link">Lire plus</span>
                 </a>
             @empty
                 <p class="patchub-bell__empty">Aucune patch note pour le moment.</p>

@@ -180,11 +180,12 @@
 }
 
 .patchub-bell__item-link {
-    display: inline-block;
+    display: block;
     margin-top: 6px;
     font-size: 12px;
     color: #0066cc;
     text-decoration: none;
+    text-align: right;
 }
 
 .patchub-bell__item-link:hover {
