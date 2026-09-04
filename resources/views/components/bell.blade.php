@@ -1,136 +1,123 @@
 @php
     use Patchub\Client\Markdown\MarkdownConverter;
-    
+
     $hasUnread = $unreadCount > 0;
     $hasPatchNotesRoute = app('router')->has('patchub.patch-notes');
 @endphp
 
-<div class="patchub-bell">
-    <details class="patchub-bell__details">
-        <summary class="patchub-bell__trigger" aria-label="Afficher les patch notes">
-            <span aria-hidden="true">🔔</span>
-            @if ($hasUnread)
-                <span class="patchub-bell__badge">{{ $unreadCount }}</span>
-            @endif
-        </summary>
+<div class="dropdown dropdown-start dropdown-top fixed left-6 bottom-6 z-50">
+    {{-- Trigger --}}
+    <div tabindex="0" role="button" class="btn btn-circle shadow-lg z-50 text-white"
+        style="background-color: var(--color-info); border-color: var(--color-info);" aria-label="Afficher les patch notes">
 
-        <div class="patchub-bell__dropdown">
+        <div class="indicator">
+            <span class="text-lg">🔔</span>
+            @if ($hasUnread)
+                <span class="badge badge-xs badge-primary indicator-item"></span>
+            @endif
+        </div>
+    </div>
+
+    {{-- Dropdown Content --}}
+    <div tabindex="0"
+        class="dropdown-content card card-compact w-80 sm:w-96 p-2 shadow-xl bg-base-100 text-base-content border border-base-200 mb-2">
+        <div class="card-body p-0">
             {{-- Header --}}
-            <div class="patchub-bell__header">
-                <strong class="patchub-bell__title">Patch notes</strong>
+            <div class="flex items-center justify-between pb-2 border-b border-base-200">
+                <h3 class="font-bold text-lg">Patch notes</h3>
 
                 @if ($hasUnread)
-                    <form method="POST" action="{{ route('patchub.mark-as-read') }}" style="display: inline;">
+                    <form method="POST" action="{{ route('patchub.mark-as-read') }}" class="inline">
                         @csrf
-                        <button type="submit" class="patchub-bell__mark-read">
+                        <button type="submit" class="btn btn-ghost btn-xs text-primary">
                             Tout marquer comme lu
                         </button>
                     </form>
                 @endif
             </div>
 
-            {{-- Items --}}
-            @forelse ($patchNotes as $patchNote)
-                <a href="#" class="patchub-bell__item" data-modal-id="{{ $patchNote->id }}" data-modal-title="{{ e($patchNote->title) }}" data-modal-version="{{ e($patchNote->version) }}" data-modal-content="{{ base64_encode(MarkdownConverter::convert($patchNote->content)) }}" onclick="patchubOpenModal(event, this)">
-                    <div class="patchub-bell__item-title">
-                        {{ $patchNote->title }}
-                        @if ($patchNote->version)
-                            <span class="patchub-bell__item-version">v{{ $patchNote->version }}</span>
-                        @endif
-                    </div>
-                    <div class="patchub-bell__item-content patchub-markdown">
-                        {!! MarkdownConverter::convert($patchNote->content) !!}
-                    </div>
-                    <span class="patchub-bell__item-link">Lire plus</span>
-                </a>
-            @empty
-                <p class="patchub-bell__empty">Aucune patch note pour le moment.</p>
-            @endforelse
+            {{-- Items Container --}}
+            <div class="flex flex-col gap-2 max-h-96 overflow-y-auto my-2 pr-1">
+                @forelse ($patchNotes as $patchNote)
+                    <a href="#" class="p-1 pb-3 mt-1 hover:bg-base-200 transition-colors text-left group block border-b border-base-300"
+                        data-modal-id="{{ $patchNote->id }}" data-modal-title="{{ e($patchNote->title) }}"
+                        data-modal-version="{{ e($patchNote->version) }}"
+                        data-modal-content="{{ base64_encode(MarkdownConverter::convert($patchNote->content)) }}"
+                        onclick="patchubOpenModal(event, this)">
+                        <div class="font-semibold flex items-center justify-between text-base-content">
+                            <span>{{ $patchNote->title }}</span>
+                            @if ($patchNote->version)
+                                <span class="badge badge-sm badge-outline">v{{ $patchNote->version }}</span>
+                            @endif
+                        </div>
+                        <div class="text-sm opacity-70 line-clamp-2 mt-1 patchub-markdown text-base-content">
+                            {!! MarkdownConverter::convert($patchNote->content) !!}
+                        </div>
+                        <span class="text-xs text-primary font-medium mt-2 inline-block group-hover:underline">Lire plus →</span>
+                    </a>
+                @empty
+                    <p class="text-center text-sm opacity-60 py-4">Aucune patch note pour le moment.</p>
+                @endforelse
+            </div>
 
-            {{-- Footer with view all link --}}
+            {{-- Footer --}}
             @if ($hasPatchNotesRoute && $patchNotes->count() > 0)
-                <div class="patchub-bell__footer">
-                    <a href="{{ route('patchub.patch-notes') }}" class="patchub-bell__view-all">
+                <div class="pt-2 border-t border-base-200 text-center">
+                    <a href="{{ route('patchub.patch-notes') }}" class="link link-primary link-hover text-sm font-medium">
                         Voir toutes les patch notes →
                     </a>
                 </div>
             @endif
         </div>
-    </details>
-</div>
-
-{{-- Modal --}}
-<div id="patchub-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; align-items: center; justify-content: center;">
-    <div id="patchub-modal-content" style="position: relative; background: white; border-radius: 8px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);">
-        <button onclick="patchubCloseModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1;">×</button>
-        <div id="patchub-modal-body"></div>
     </div>
 </div>
 
-<style>
-    .patchub-bell__item {
-        display: block;
-        text-decoration: none;
-        cursor: pointer;
-        padding: 12px;
-        border-bottom: 1px solid #e5e7eb;
-        transition: background-color 0.2s;
-    }
-    .patchub-bell__item:hover {
-        background-color: #f9fafb;
-    }
-</style>
+{{-- Modal DaisyUI --}}
+<dialog id="patchub-modal" class="modal">
+    <div class="modal-box w-11/12 max-w-3xl bg-base-100 text-base-content shadow-2xl">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <div id="patchub-modal-body"></div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
 
 <script>
-function patchubOpenModal(event, element) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const overlay = document.getElementById('patchub-modal-overlay');
-    const body = document.getElementById('patchub-modal-body');
-    
-    // Decode base64 content properly for UTF-8
-    const binaryString = atob(element.dataset.modalContent);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    const decodedContent = new TextDecoder().decode(bytes);
-    
-    const data = {
-        id: element.dataset.modalId,
-        title: element.dataset.modalTitle,
-        version: element.dataset.modalVersion,
-        content: decodedContent
-    };
-    
-    body.innerHTML = `
-        <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: bold; color: #1f2937;">
+    function patchubOpenModal(event, element) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const modal = document.getElementById('patchub-modal');
+        const body = document.getElementById('patchub-modal-body');
+
+        const binaryString = atob(element.dataset.modalContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        const decodedContent = new TextDecoder().decode(bytes);
+
+        const data = {
+            id: element.dataset.modalId,
+            title: element.dataset.modalTitle,
+            version: element.dataset.modalVersion,
+            content: decodedContent
+        };
+
+        body.innerHTML = `
+        <h3 class="font-bold text-xl flex items-center gap-2 text-base-content">
             ${data.title}
-            ${data.version ? `<span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-left: 0.5rem;">v${data.version}</span>` : ''}
-        </h2>
-        <div class="patchub-markdown" style="margin-top: 1.5rem; color: #374151; line-height: 1.6;">
+            ${data.version ? `<span class="badge badge-primary badge-sm">v${data.version}</span>` : ''}
+        </h3>
+        <div class="patchub-markdown mt-4 text-base-content">
             ${data.content}
         </div>
     `;
-    
-    overlay.style.display = 'flex';
-}
 
-function patchubCloseModal() {
-    const overlay = document.getElementById('patchub-modal-overlay');
-    overlay.style.display = 'none';
-}
-
-document.getElementById('patchub-modal-overlay').addEventListener('click', function(event) {
-    if (event.target === this) {
-        patchubCloseModal();
+        modal.showModal();
     }
-});
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        patchubCloseModal();
-    }
-});
 </script>

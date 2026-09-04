@@ -1,535 +1,179 @@
-/* Patchub Client - Universal CSS */
-/* Framework agnostic - works with Bootstrap, Tailwind, plain HTML, etc. */
+/* Patchub Markdown - Style Aéré & Moderne */
 
-.patchub-bell {
-    --patchub-offset-right: 16px;
-    --patchub-offset-bottom: 16px;
-    --patchub-widget-size: 48px;
-    position: fixed;
-    right: var(--patchub-offset-right);
-    bottom: var(--patchub-offset-bottom);
-    z-index: 1050;
-}
-
-.patchub-bell__details {
-    position: relative;
-}
-
-.patchub-bell__trigger {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--patchub-widget-size);
-    height: var(--patchub-widget-size);
-    padding: 0;
-    border: 1px solid #d5d9df;
-    border-radius: 50%;
-    background: #ffffff;
-    color: inherit;
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    list-style: none;
-}
-
-.patchub-bell__trigger::-webkit-details-marker {
-    display: none;
-}
-
-.patchub-bell__trigger:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
-}
-
-.patchub-bell__badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    min-width: 18px;
-    padding: 2px 5px;
-    background-color: #e74c3c;
-    color: #ffffff;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: 1.2;
-    text-align: center;
-}
-
-.patchub-bell__dropdown {
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 12px);
-    width: min(360px, calc(100vw - 32px));
-    max-height: min(400px, calc(100vh - 96px));
-    overflow-y: auto;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-    z-index: 1;
-}
-
-@media (max-width: 480px) {
-    .patchub-bell {
-        --patchub-offset-right: 12px;
-        --patchub-offset-bottom: 12px;
-    }
-
-    .patchub-bell__dropdown {
-        width: calc(100vw - 24px);
-    }
-}
-
-.patchub-bell__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-}
-
-.patchub-bell__title {
-    margin: 0;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.patchub-bell__mark-read {
-    background: none;
-    border: none;
-    font-size: 12px;
-    color: #0066cc;
-    cursor: pointer;
-    padding: 0;
-    text-decoration: none;
-}
-
-.patchub-bell__mark-read:hover {
-    text-decoration: underline;
-}
-
-.patchub-bell__empty {
-    font-size: 13px;
-    color: #888;
-    text-align: center;
-    padding: 12px 0;
-}
-
-.patchub-bell__item {
-    padding: 8px 0;
-    border-top: 1px solid #eee;
-}
-
-.patchub-bell__item:first-child {
-    border-top: none;
-    padding-top: 0;
-}
-
-.patchub-bell__item-title {
-    margin: 0;
-    font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-}
-
-.patchub-bell__item-version {
-    color: #888;
-    font-weight: normal;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.patchub-bell__item-content {
-    margin: 4px 0 0;
-    font-size: 13px;
-    color: #555;
-    line-height: 1.4;
-    max-height: 5.6em;
-    overflow: hidden;
-}
-
-.patchub-bell__item-content p {
-    margin: 0;
-}
-
-.patchub-bell__item-content h1,
-.patchub-bell__item-content h2,
-.patchub-bell__item-content h3,
-.patchub-bell__item-content h4,
-.patchub-bell__item-content h5,
-.patchub-bell__item-content h6 {
-    margin: 0;
-    font-size: 1em;
-}
-
-.patchub-bell__item-content ul,
-.patchub-bell__item-content ol {
-    margin: 0;
-    padding-left: 1.25em;
-}
-
-.patchub-bell__item-content pre,
-.patchub-bell__item-content table,
-.patchub-bell__item-content blockquote {
-    display: none;
-}
-
-.patchub-bell__item-link {
-    display: block;
-    margin-top: 6px;
-    font-size: 12px;
-    color: #0066cc;
-    text-decoration: none;
-    text-align: right;
-}
-
-.patchub-bell__item-link:hover {
-    text-decoration: underline;
-}
-
-.patchub-bell__footer {
-    margin-top: 12px;
-    padding-top: 8px;
-    border-top: 1px solid #eee;
-    text-align: center;
-}
-
-.patchub-bell__view-all {
-    display: inline-block;
-    font-size: 12px;
-    color: #0066cc;
-    text-decoration: none;
-}
-
-.patchub-bell__view-all:hover {
-    text-decoration: underline;
-}
-
-/* Scrollbar styling for dropdown */
-.patchub-bell__dropdown::-webkit-scrollbar {
-    width: 6px;
-}
-
-.patchub-bell__dropdown::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.patchub-bell__dropdown::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 3px;
-}
-
-.patchub-bell__dropdown::-webkit-scrollbar-thumb:hover {
-    background: #999;
-}
-
-/* Modal Styles - Framework Agnostic */
-.patchub-modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-}
-
-.patchub-modal-overlay.active {
-    display: flex;
-}
-
-.patchub-modal {
-    position: relative;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    max-width: 700px;
-    width: 90vw;
-    max-height: 85vh;
-    overflow-y: auto;
-    animation: patchub-slide-in 0.3s ease-out;
-}
-
-@keyframes patchub-slide-in {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.patchub-modal__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 1.5rem;
-}
-
-.patchub-modal__title {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    flex: 1;
-    padding-right: 1rem;
-}
-
-.patchub-modal__version {
-    display: inline-block;
-    background: #e3f2fd;
-    color: #1976d2;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    white-space: nowrap;
-    margin-top: 0.5rem;
-}
-
-.patchub-modal__close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    color: #666;
-    line-height: 1;
-}
-
-.patchub-modal__close:hover {
-    color: #000;
-}
-
-.patchub-modal__content {
-    padding: 1.5rem;
+.patchub-markdown {
     font-size: 0.95rem;
-    line-height: 1.6;
-    color: #333;
+    line-height: 1.7;
+    color: var(--color-base-content);
 }
 
-.patchub-modal__content h1,
-.patchub-modal__content h2,
-.patchub-modal__content h3,
-.patchub-modal__content h4,
-.patchub-modal__content h5,
-.patchub-modal__content h6 {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.patchub-modal__content h1 {
-    font-size: 1.5rem;
-}
-
-.patchub-modal__content h2 {
-    font-size: 1.25rem;
-}
-
-.patchub-modal__content p {
-    margin: 0.5rem 0;
-}
-
-.patchub-modal__content ul,
-.patchub-modal__content ol {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-}
-
-.patchub-modal__content li {
-    margin: 0.25rem 0;
-}
-
-.patchub-modal__content code {
-    background: #f5f5f5;
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9em;
-}
-
-.patchub-modal__content pre {
-    background: #f5f5f5;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    margin: 1rem 0;
-}
-
-.patchub-modal__footer {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #eee;
-}
-
-.patchub-modal__button {
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.375rem;
-    background: #f5f5f5;
-    color: #333;
-    font-size: 0.875rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-}
-
-.patchub-modal__button:hover {
-    background: #efefef;
-    border-color: #ccc;
-}
-
-.patchub-modal__button--primary {
-    background: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-}
-
-.patchub-modal__button--primary:hover {
-    background: #2563eb;
-    border-color: #2563eb;
-}
-
-/* Responsiveness */
-@media (max-width: 600px) {
-    .patchub-modal {
-        max-width: 95vw;
-        max-height: 90vh;
-    }
-
-    .patchub-modal__header {
-        padding: 1rem;
-    }
-
-    .patchub-modal__content {
-        padding: 1rem;
-    }
-
-    .patchub-modal__footer {
-        padding: 0.75rem 1rem;
-        flex-wrap: wrap;
-    }
-
-    .patchub-modal__button {
-        flex: 1;
-        min-width: 100px;
-    }
-}
-
-/* Markdown Content Styling */
+/* Titres hiérarchisés et espacés */
 .patchub-markdown h1,
 .patchub-markdown h2,
 .patchub-markdown h3,
 .patchub-markdown h4,
 .patchub-markdown h5,
 .patchub-markdown h6 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.4rem;
     font-weight: 700;
+    color: var(--color-base-content);
+    line-height: 1.3;
 }
 
-.patchub-markdown h1 { font-size: 1.35rem; }
-.patchub-markdown h2 { font-size: 1.15rem; }
-.patchub-markdown h3 { font-size: 1rem; }
-.patchub-markdown h4 { font-size: 0.95rem; }
-.patchub-markdown h5 { font-size: 0.9rem; }
-.patchub-markdown h6 { font-size: 0.85rem; }
+.patchub-markdown h1 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-base-300);
+    padding-bottom: 0.3rem;
+}
 
+.patchub-markdown h2 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.patchub-markdown h3 {
+    font-size: 1.1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.patchub-markdown h4,
+.patchub-markdown h5,
+.patchub-markdown h6 {
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+/* Paragraphes */
 .patchub-markdown p {
-    margin: 0.35rem 0;
-    font-size: 0.9rem;
+    margin: 0.65rem 0;
 }
 
+/* Listes aérées */
 .patchub-markdown ul,
 .patchub-markdown ol {
-    margin: 0.35rem 0;
-    padding-left: 1.25rem;
-    font-size: 0.9rem;
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
 }
 
 .patchub-markdown li {
-    margin: 0.1rem 0;
+    margin: 0.35rem 0;
 }
 
+.patchub-markdown li > p {
+    margin: 0.2rem 0;
+}
+
+/* Code en ligne */
 .patchub-markdown code {
-    background: #f3f4f6;
-    padding: 0.15rem 0.3rem;
-    border-radius: 0.25rem;
-    font-family: 'Courier New', 'Monaco', monospace;
-    font-size: 0.8em;
-    color: #1f2937;
+    background: color-mix(in srgb, var(--color-base-content) 12%, transparent);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    font-family: 'Fira Code', 'Courier New', Monaco, monospace;
+    font-size: 0.85em;
+    color: var(--color-primary);
 }
 
+/* Blocs de code */
 .patchub-markdown pre {
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
+    background: var(--color-base-200);
+    border: 1px solid var(--color-base-300);
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding: 1rem;
     overflow-x: auto;
-    margin: 0.5rem 0;
-    font-size: 0.8rem;
+    margin: 1rem 0;
+    font-size: 0.85rem;
 }
 
 .patchub-markdown pre code {
     background: none;
     padding: 0;
     color: inherit;
+    font-size: inherit;
 }
 
+/* Citations (Blockquotes) */
 .patchub-markdown blockquote {
-    border-left: 3px solid #d1d5db;
-    margin: 0.5rem 0;
-    padding-left: 0.75rem;
-    color: #6b7280;
+    border-left: 4px solid var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 5%, transparent);
+    margin: 1rem 0;
+    padding: 0.35rem 0.6rem;
+    border-radius: 0 0.3rem 0.3rem 0;
+    color: color-mix(in srgb, var(--color-base-content) 85%, transparent);
     font-style: italic;
     font-size: 0.9rem;
 }
 
+/* Liens */
 .patchub-markdown a {
-    color: #0066cc;
+    color: var(--color-primary);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .patchub-markdown a:hover {
     text-decoration: underline;
 }
 
+/* Tableaux modernes et propres */
 .patchub-markdown table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     width: 100%;
-    margin: 0.5rem 0;
-    font-size: 0.85rem;
+    margin: 1.25rem 0;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-base-300);
+    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .patchub-markdown th,
 .patchub-markdown td {
-    border: 1px solid #e5e7eb;
-    padding: 0.35rem 0.4rem;
+    padding: 0.65rem 0.85rem;
     text-align: left;
+    border-bottom: 1px solid var(--color-base-300);
+    border-right: 1px solid var(--color-base-300);
+}
+
+.patchub-markdown th:last-child,
+.patchub-markdown td:last-child {
+    border-right: none;
+}
+
+.patchub-markdown tr:last-child td {
+    border-bottom: none;
 }
 
 .patchub-markdown th {
-    background: #f9fafb;
+    background: var(--color-base-200);
     font-weight: 600;
+    color: var(--color-base-content);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
 }
 
+.patchub-markdown tr:hover td {
+    background: color-mix(in srgb, var(--color-base-200) 50%, transparent);
+}
+
+/* Séparateurs */
 .patchub-markdown hr {
     border: none;
-    border-top: 1px solid #e5e7eb;
-    margin: 1rem 0;
+    border-top: 2px solid var(--color-base-300);
+    margin: 1.5rem 0;
+}
+
+/* Réduit la taille du texte et des éléments Markdown uniquement à l'intérieur du dropdown */
+.patchub-bell__dropdown .patchub-markdown {
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.patchub-bell__dropdown .patchub-markdown p,
+.patchub-bell__dropdown .patchub-markdown li {
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
 }
